@@ -5,27 +5,47 @@
   <title>ANI 💖</title>
   <style>
     body {
-      background-color: pink;
-      color: white;
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, #ff69b4, #d81255);
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
-      font-family: "Comic Sans MS", cursive, sans-serif;
-      padding-top: 100px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
+
     h1 {
       font-size: 3em;
-      animation: parpadeo 1s infinite alternate;
+      margin-bottom: 20px;
+      animation: pulse 1.5s infinite;
     }
-    @keyframes parpadeo {
-      from {opacity: 1;}
-      to {opacity: 0.7;}
+
+    p {
+      font-size: 1.4em;
+      margin-bottom: 30px;
+    }
+
+    audio {
+      width: 300px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+      100% { transform: scale(1); opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <h1>Lluvia Gigante de Amor ANI 💖</h1>
+  <h1>Lluvia Gigante de Amor para ANI 💖</h1>
+  <p>Tu nombre suena en cada latido mío.</p>
   <audio autoplay loop controls>
     <source src="ani.mp3" type="audio/mpeg">
-    Tu navegador no soporta el elemento de audio.
+    Tu navegador no soporta el audio.
   </audio>
 </body>
 </html>
