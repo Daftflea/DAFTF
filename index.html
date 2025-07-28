@@ -9,28 +9,26 @@
       padding: 0;
       background: radial-gradient(circle at top, #ff69b4, #d81255);
       color: #fff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      text-align: center;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
     }
 
     h1 {
+      text-align: center;
+      margin-top: 80px;
       font-size: 3em;
-      margin-bottom: 20px;
       animation: pulse 1.5s infinite;
     }
 
     p {
+      text-align: center;
       font-size: 1.4em;
       margin-bottom: 30px;
     }
 
     audio {
-      width: 300px;
+      display: block;
+      margin: 0 auto;
     }
 
     @keyframes pulse {
@@ -38,14 +36,44 @@
       50% { transform: scale(1.05); opacity: 0.9; }
       100% { transform: scale(1); opacity: 1; }
     }
+
+    .word {
+      position: absolute;
+      top: -50px;
+      font-size: 1.2em;
+      animation: fall linear infinite;
+      color: rgba(255,255,255,0.8);
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1> ANI 💖</h1>
+  <h1>Lluvia Gigante de Amor para ANI 💖</h1>
   <p>Tu nombre suena en cada latido mío.</p>
   <audio autoplay loop controls>
     <source src="ani.mp3" type="audio/mpeg">
     Tu navegador no soporta el audio.
   </audio>
+
+  <script>
+    const palabras = ["amor", "ani", "besos", "te quiero", "corazón", "latido", "abrazo", "dulzura"];
+    function crearPalabra() {
+      const palabra = document.createElement("div");
+      palabra.className = "word";
+      palabra.textContent = palabras[Math.floor(Math.random() * palabras.length)];
+      palabra.style.left = Math.random() * window.innerWidth + "px";
+      palabra.style.animationDuration = (3 + Math.random() * 3) + "s";
+      document.body.appendChild(palabra);
+      setTimeout(() => palabra.remove(), 6000);
+    }
+    setInterval(crearPalabra, 500);
+  </script>
 </body>
 </html>
