@@ -3,43 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <title>ANI 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
       padding: 0;
-      height: 100vh;
-      background: radial-gradient(circle at top, #ff69b4, #d81255);
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: cover;
-      color: #fff;
+      min-height: 100vh;
       font-family: 'Segoe UI', sans-serif;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      position: relative;
+      text-align: center;
       cursor: pointer;
     }
 
     h1 {
       font-size: 3em;
+      margin: 0 20px;
       animation: pulse 1.5s infinite;
-      text-align: center;
-      margin: 0;
+      color: #fff;
     }
 
     p {
       font-size: 1.4em;
-      margin: 20px 0;
-      text-align: center;
+      margin: 20px 20px;
+      color: #fff;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 1em;
+      background: #ff1493;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ff69b4;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
     }
 
     @keyframes pulse {
       0% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.05); opacity: 0.9; }
       100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes auroraLatido {
+      0%, 100% {
+        background-size: 100% 100%;
+        filter: brightness(1);
+        background: radial-gradient(circle at top, #ff69b4, #d81255);
+      }
+      25% {
+        background-size: 101.5% 101.5%;
+        filter: brightness(1.05);
+        background: radial-gradient(circle at top, #ff85c1, #e03270);
+      }
+      50% {
+        background-size: 103% 103%;
+        filter: brightness(1.12);
+        background: radial-gradient(circle at top, #ffa3d1, #f54590);
+      }
+      75% {
+        background-size: 101.5% 101.5%;
+        filter: brightness(1.05);
+        background: radial-gradient(circle at top, #ff85c1, #e03270);
+      }
+    }
+
+    body.aurora {
+      animation: auroraLatido 8s ease-in-out infinite;
     }
 
     .word {
@@ -57,11 +96,16 @@
       to { transform: translateY(100vh); opacity: 0; }
     }
 
-    iframe {
-      width: 0;
-      height: 0;
-      border: none;
-      visibility: hidden;
+    @media screen and (max-width: 768px) {
+      h1 { font-size: 2.3em; }
+      p { font-size: 1.2em; }
+      .word { font-size: 2.2em; }
+    }
+
+    @media screen and (max-width: 480px) {
+      h1 { font-size: 1.8em; }
+      p { font-size: 1em; }
+      .word { font-size: 1.8em; }
     }
   </style>
 </head>
@@ -69,21 +113,22 @@
 <body>
   <h1>ANI 💖</h1>
   <p>Tu nombre suena en cada latido mío</p>
+  <button onclick="reproducirAudio()">🎵 Escuchar nuestra canción</button>
 
-  <!-- Audio interactivo con sonido -->
   <audio id="miAudio" loop>
-    <source src="Eres_para_Mi.mp3" type="audio/mpeg">
+    <source src="Eres%20para%20Mí.mp3" type="audio/mpeg">
   </audio>
 
   <script>
     const audio = document.getElementById("miAudio");
 
-    window.addEventListener("click", () => {
+    function reproducirAudio() {
       if (audio.paused) {
         audio.currentTime = 30;
         audio.play();
+        document.body.classList.add("aurora");
       }
-    });
+    }
 
     const palabras = ["te amo", "te adoro", "te quiero", "me encantas", "mi amor"];
     function crearPalabra() {
