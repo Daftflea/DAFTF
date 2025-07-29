@@ -8,8 +8,7 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #ffcccc;
-      transition: background-color 3s ease;
+      background-color: #ffcccc; /* Color fijo */
       overflow: hidden;
       font-family: 'Segoe UI', sans-serif;
     }
@@ -30,10 +29,6 @@
 
     audio {
       display: none;
-    }
-
-    .aurora {
-      animation: auroraLatido 8s ease-in-out infinite;
     }
 
     .word {
@@ -73,21 +68,21 @@
   <p>Tu nombre suena en cada latido mío</p>
 
   <audio id="miAudio" autoplay loop>
-    <source src="Eres para Mí.mp3" type="audio/mpeg" />
+    <source src="Eres%20para%20Mí.mp3" type="audio/mpeg" />
   </audio>
 
   <script>
     const audio = document.getElementById("miAudio");
 
     window.addEventListener("DOMContentLoaded", () => {
-      document.body.style.backgroundColor = "#cceeff"; // transición del fondo
+      audio.currentTime = 30; // ⏱️ Comienza desde el segundo 30
       audio.volume = 1.0;
       audio.play().catch((e) => {
         console.log("Bloqueo de reproducción automática:", e);
       });
     });
 
-    const palabras = ["te amo", "te adoro", "te quiero", "me encantas", "mi amor"];
+    const palabras = ["te amo", "te adoro", "te quiero", "me encantas", "mi amor", "❤️"];
     function crearPalabra() {
       const palabra = document.createElement("div");
       palabra.className = "word";
