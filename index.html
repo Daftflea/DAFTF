@@ -13,11 +13,11 @@
       font-family: 'Segoe UI', sans-serif;
     }
 
+    /* Inicio */
     #inicio {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -44,11 +44,12 @@
     #inicio p {
       font-size: 1.5em;
       color: #8b0000;
-      margin-bottom: 20px;
       text-shadow: 0 0 8px #fff;
       text-align: center;
+      margin-bottom: 20px;
     }
 
+    /* Palabras flotantes */
     .word {
       position: absolute;
       top: -50px;
@@ -58,13 +59,10 @@
     }
 
     @keyframes flotar {
-      to {
-        transform: translateY(100vh);
-        opacity: 0;
-      }
+      to { transform: translateY(100vh); opacity: 0; }
     }
 
-    /* Fondo de barras animadas */
+    /* Barras fondo */
     #barraAudio {
       position: fixed;
       top: 0; left: 0;
@@ -73,8 +71,8 @@
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
-      z-index: 0; /* fondo */
       opacity: 0.15;
+      z-index: 0;
       pointer-events: none;
     }
 
@@ -94,38 +92,66 @@
       50% { height: 80px; }
     }
 
+    /* Frase especial */
     #fraseEspecial {
-  display: none;
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 2.5em;
-  color: #d10065;
-  text-shadow:
-    0 0 10px #fff,
-    0 0 5px #ff69b4,
-    0 0 15px #ffc0cb;
-  animation: aparecer 2s ease-out, desvanecer 1.5s ease-out 7s forwards;
-  z-index: 998;
-}
-
-@keyframes aparecer {
-  from { opacity: 0; transform: translate(-50%, -60%); }
-  to { opacity: 1; transform: translate(-50%, -50%); }
-}
-
-@keyframes desvanecer {
-  to { opacity: 0; }
-}
+      display: none;
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2.5em;
+      color: #d10065;
+      text-shadow: 0 0 10px #fff, 0 0 5px #ff69b4, 0 0 15px #ffc0cb;
+      animation: aparecer 2s ease-out, desvanecer 1.5s ease-out 7s forwards;
+      z-index: 998;
+    }
 
     @keyframes aparecer {
       from { opacity: 0; transform: translate(-50%, -60%); }
       to { opacity: 1; transform: translate(-50%, -50%); }
     }
+
+    @keyframes desvanecer {
+      to { opacity: 0; }
+    }
+
+    /* Mensaje final */
+    #mensajeFinal {
+      display: none;
+      position: fixed;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2.8em;
+      color: #ff1493;
+      text-shadow: 0 0 12px #fff, 0 0 18px #ffc0cb;
+      animation: latido 1.5s infinite ease-in-out;
+      z-index: 999;
+      opacity: 0;
+    }
+
+    #corazonesLluvia {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 998;
+    }
+
+    .corazon {
+      position: absolute;
+      font-size: 1.8em;
+      color: #ff69b4;
+      animation: caer 4s linear forwards;
+    }
+
+    @keyframes caer {
+      0% { top: -10%; opacity: 1; }
+      100% { top: 100%; opacity: 0; transform: rotate(360deg); }
+    }
   </style>
 </head>
-
 <body>
   <!-- Pantalla de inicio -->
   <div id="inicio">
@@ -134,45 +160,64 @@
   </div>
 
   <!-- Fondo de barras animadas -->
-  <div id="barraAudio">
-    <!-- Generamos muchas barras para llenar el fondo visualmente -->
-    <script>
-      for (let i = 0; i < 120; i++) {
-        document.write('<div class="barra"></div>');
-      }
-    </script>
-  </div>
+  <div id="barraAudio"></div>
 
   <!-- Frase especial -->
   <div id="fraseEspecial">Tu nombre suena en cada latido mío</div>
 
+  <!-- Mensaje final + lluvia -->
+  <div id="mensajeFinal">Te amo Ani &lt;3</div>
+  <div id="corazonesLluvia"></div>
+
+  <!-- Audio -->
   <audio id="miAudio" loop>
     <source src="Eres%20para%20Mí.mp3" type="audio/mpeg" />
   </audio>
 
+  <!-- Script -->
   <script>
     const audio = document.getElementById("miAudio");
 
     function iniciar() {
       audio.currentTime = 30;
       audio.volume = 1.0;
-      audio.play().catch(e => {
-        console.log("Bloqueo de reproducción automática:", e);
-      });
-
+      audio.play().catch(e => console.log("Bloqueo de reproducción automática:", e));
       document.getElementById("inicio").style.opacity = "0";
       setTimeout(() => {
         document.getElementById("inicio").style.display = "none";
         document.getElementById("barraAudio").style.display = "flex";
         document.getElementById("fraseEspecial").style.display = "block";
+        for (let i = 0; i < 120; i++) {
+          const barra = document.createElement("div");
+          barra.className = "barra";
+          document.getElementById("barraAudio").appendChild(barra);
+        }
       }, 1200);
+
+      // Aparece el mensaje final + corazones
+      setTimeout(() => {
+        const mensaje = document.getElementById("mensajeFinal");
+        mensaje.style.display = "block";
+        mensaje.animate([{ opacity: 0 }, { opacity: 1 }], {
+          duration: 2000,
+          fill: "forwards"
+        });
+
+        const contenedor = document.getElementById("corazonesLluvia");
+        for (let i = 0; i < 50; i++) {
+          const corazon = document.createElement("div");
+          corazon.className = "corazon";
+          corazon.innerHTML = "❤️";
+          corazon.style.left = Math.random() * window.innerWidth + "px";
+          corazon.style.animationDuration = (2 + Math.random() * 2) + "s";
+          contenedor.appendChild(corazon);
+          setTimeout(() => corazon.remove(), 4000);
+        }
+      }, 12000);
     }
 
-    const palabras = [
-      "te amo", "te adoro", "te quiero", "me encantas", "mi amor", "❤️",
-      
-    ];
-
+    // Animación de palabras flotantes
+    const palabras = [ "te amo", "te adoro", "te quiero", "me encantas", "mi amor", "❤️" ];
     function crearPalabra() {
       const palabra = document.createElement("div");
       palabra.className = "word";
@@ -182,7 +227,6 @@
       document.body.appendChild(palabra);
       setTimeout(() => palabra.remove(), 6000);
     }
-
     setInterval(crearPalabra, 500);
   </script>
 </body>
