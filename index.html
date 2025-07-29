@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Para Ani 💖</title>
+  <title>Para Ani 💞</title>
   <style>
     body {
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
       overflow: hidden;
-      background-color: #ffe4e1; /* Rosa pastel */
+      background-color: #ffe4e1;
+      transition: background-color 0.2s ease;
     }
 
     #inicio {
@@ -148,13 +149,11 @@
   </style>
 </head>
 <body>
-  <!-- Pantalla de inicio -->
   <div id="inicio">
     <p>Tocá el corazón para escuchar nuestra canción</p>
     <button onclick="iniciar()" id="btnCorazon">❤️</button>
   </div>
 
-  <!-- Fondo de barras animadas -->
   <div id="barraAudio">
     <script>
       for (let i = 0; i < 120; i++) {
@@ -163,10 +162,8 @@
     </script>
   </div>
 
-  <!-- Frase especial -->
   <div id="fraseEspecial">Tu nombre suena en cada latido mío</div>
 
-  <!-- Mensaje final + lluvia -->
   <div id="mensajeFinal">Te amo Ani &lt;3</div>
   <div id="corazonesLluvia"></div>
 
@@ -178,19 +175,31 @@
     const audio = document.getElementById("miAudio");
     const palabras = [ "te amo", "te adoro", "te quiero", "me encantas", "mi amor", "❤️" ];
 
+    let audioContext, analyser, dataArray;
+
     function iniciar() {
       audio.currentTime = 30;
       audio.volume = 1.0;
-      audio.play().catch(e => console.log("Bloqueo de reproducción automática:", e));
+      audio.play().then(() => {
+        document.getElementById("inicio").style.opacity = "0";
+        setTimeout(() => {
+          document.getElementById("inicio").style.display = "none";
+          document.getElementById("barraAudio").style.display = "flex";
+          document.getElementById("fraseEspecial").style.display = "block";
+        }, 1200);
 
-      document.getElementById("inicio").style.opacity = "0";
-      setTimeout(() => {
-        document.getElementById("inicio").style.display = "none";
-        document.getElementById("barraAudio").style.display = "flex";
-        document.getElementById("fraseEspecial").style.display = "block";
-      }, 1200);
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const source = audioContext.createMediaElementSource(audio);
+        analyser = audioContext.createAnalyser();
+        source.connect(analyser);
+        analyser.connect(audioContext.destination);
+        analyser.fftSize = 128;
+        const bufferLength = analyser.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
+        audioContext.resume();
+        fondoRosaDinamico();
+      }).catch(e => console.log("Bloqueo de reproducción automática:", e));
 
-      // Aparece el mensaje final + corazones
       setTimeout(() => {
         const mensaje = document.getElementById("mensajeFinal");
         mensaje.style.display = "block";
@@ -212,7 +221,18 @@
       }, 12000);
     }
 
-    // Palabras flotantes
+    function fondoRosaDinamico() {
+      analyser.getByteFrequencyData(dataArray);
+      const energy = dataArray.reduce((a, b) => a + b) / dataArray.length;
+      const intensidad = Math.min(1, Math.max(0, energy / 150));
+
+      // Mapea intensidad a un tono de rosa
+      const tono = Math.floor(228 - intensidad * 30); // entre 198 y 228
+      document.body.style.backgroundColor = `rgb(255, ${tono}, ${tono})`;
+
+      requestAnimationFrame(fondoRosaDinamico);
+    }
+
     function crearPalabra() {
       const palabra = document.createElement("div");
       palabra.className = "word";
@@ -226,4 +246,3 @@
     setInterval(crearPalabra, 500);
   </script>
 </body>
-</html>
