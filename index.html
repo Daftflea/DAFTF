@@ -1,83 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>ANI 💖</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Eres para Mí</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
       padding: 0;
-      min-height: 100vh;
-      font-family: 'Segoe UI', sans-serif;
+      background-color: #ffcccc;
+      transition: background-color 3s ease;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      cursor: pointer;
+      font-family: 'Segoe UI', sans-serif;
     }
 
     h1 {
+      text-align: center;
+      margin-top: 20vh;
       font-size: 3em;
-      margin: 0 20px;
-      animation: pulse 1.5s infinite;
-      color: #fff;
+      color: #663366;
     }
 
     p {
+      text-align: center;
       font-size: 1.4em;
-      margin: 20px 20px;
-      color: #fff;
+      color: #555;
+      margin-top: 1em;
     }
 
-    button {
-      padding: 12px 20px;
-      font-size: 1em;
-      background: #ff1493;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #ff69b4;
-      cursor: pointer;
-      transition: transform 0.3s ease;
+    audio {
+      display: none;
     }
 
-    button:hover {
-      transform: scale(1.05);
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.9; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    @keyframes auroraLatido {
-      0%, 100% {
-        background-size: 100% 100%;
-        filter: brightness(1);
-        background: radial-gradient(circle at top, #ff69b4, #d81255);
-      }
-      25% {
-        background-size: 101.5% 101.5%;
-        filter: brightness(1.05);
-        background: radial-gradient(circle at top, #ff85c1, #e03270);
-      }
-      50% {
-        background-size: 103% 103%;
-        filter: brightness(1.12);
-        background: radial-gradient(circle at top, #ffa3d1, #f54590);
-      }
-      75% {
-        background-size: 101.5% 101.5%;
-        filter: brightness(1.05);
-        background: radial-gradient(circle at top, #ff85c1, #e03270);
-      }
-    }
-
-    body.aurora {
+    .aurora {
       animation: auroraLatido 8s ease-in-out infinite;
     }
 
@@ -87,13 +42,16 @@
       font-size: 3em;
       font-weight: bold;
       animation: fall linear infinite;
-      color: rgba(255,255,255,0.95);
+      color: rgba(255, 255, 255, 0.95);
       pointer-events: none;
       text-shadow: 0 0 10px #fff, 0 0 20px #ff69b4, 0 0 30px #ff1493;
     }
 
     @keyframes fall {
-      to { transform: translateY(100vh); opacity: 0; }
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
     }
 
     @media screen and (max-width: 768px) {
@@ -109,26 +67,25 @@
     }
   </style>
 </head>
-
 <body>
+
   <h1>ANI 💖</h1>
   <p>Tu nombre suena en cada latido mío</p>
-  <button onclick="reproducirAudio()">🎵 Escuchar nuestra canción</button>
 
-  <audio id="miAudio" loop>
-    <source src="Eres%20para%20Mí.mp3" type="audio/mpeg">
+  <audio id="miAudio" autoplay loop>
+    <source src="Eres%20para%20Mí.mp3" type="audio/mpeg" />
   </audio>
 
   <script>
     const audio = document.getElementById("miAudio");
 
-    function reproducirAudio() {
-      if (audio.paused) {
-        audio.currentTime = 30;
-        audio.play();
-        document.body.classList.add("aurora");
-      }
-    }
+    window.addEventListener("DOMContentLoaded", () => {
+      document.body.style.backgroundColor = "#cceeff"; // transición del fondo
+      audio.volume = 1.0;
+      audio.play().catch((e) => {
+        console.log("Bloqueo de reproducción automática:", e);
+      });
+    });
 
     const palabras = ["te amo", "te adoro", "te quiero", "me encantas", "mi amor"];
     function crearPalabra() {
@@ -140,6 +97,7 @@
       document.body.appendChild(palabra);
       setTimeout(() => palabra.remove(), 6000);
     }
+
     setInterval(crearPalabra, 500);
   </script>
 </body>
