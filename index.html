@@ -20,6 +20,7 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      cursor: pointer;
     }
 
     h1 {
@@ -69,23 +70,22 @@
   <h1>ANI 💖</h1>
   <p>Tu nombre suena en cada latido mío</p>
 
-  <!-- Audio oculto que empieza desde el segundo 30 -->
-<audio id="miAudio" loop>
-  <source src="Eres_para_Mi.mp3" type="audio/mpeg">
-</audio>
+  <!-- Audio interactivo con sonido -->
+  <audio id="miAudio" loop>
+    <source src="Eres%20para%20Mí.mp3" type="audio/mpeg">
+  </audio>
 
-<script>
-  window.addEventListener("click", () => {
-    const audio = document.getElementById("miAudio");
-    audio.currentTime = 30;
-    audio.play();
-  });
-</script>
-
-
-  <!-- Palabras en cascada -->
   <script>
-    const palabras = ["te amo", "te adoro", "te quiero", "me encantas", "mi amor", "❤️", "❤️"];
+    const audio = document.getElementById("miAudio");
+
+    window.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.currentTime = 30;
+        audio.play();
+      }
+    });
+
+    const palabras = ["te amo", "te adoro", "te quiero", "me encantas", "mi amor"];
     function crearPalabra() {
       const palabra = document.createElement("div");
       palabra.className = "word";
