@@ -70,17 +70,18 @@
   <p>Tu nombre suena en cada latido mío</p>
 
   <!-- Audio oculto que empieza desde el segundo 30 -->
-  <audio id="miAudio" loop muted>
+<audio id="miAudio" loop>
   <source src="Eres_para_Mi.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-  window.addEventListener("DOMContentLoaded", () => {
+  window.addEventListener("click", () => {
     const audio = document.getElementById("miAudio");
     audio.currentTime = 30;
-    audio.play().catch(err => console.log("No se pudo reproducir el audio:", err));
+    audio.play();
   });
 </script>
+
 
   <!-- Palabras en cascada -->
   <script>
