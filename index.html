@@ -8,7 +8,7 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #ffcccc; /* Color fijo */
+      background-color: #ffcccc;
       overflow: hidden;
       font-family: 'Segoe UI', sans-serif;
     }
@@ -91,8 +91,28 @@
       0%, 100% { height: 20px; }
       50% { height: 40px; }
     }
+
+    /* Frase especial centrada */
+    #fraseEspecial {
+      display: none;
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2em;
+      color: #d10065;
+      text-shadow: 0 0 10px #fff;
+      animation: aparecer 2s ease-out;
+      z-index: 998;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translate(-50%, -60%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
   </style>
 </head>
+
 <body>
   <!-- Pantalla de inicio -->
   <div id="inicio">
@@ -100,8 +120,7 @@
     <button onclick="iniciar()" id="btnCorazon">❤️</button>
   </div>
 
-  <!-- Animaciones flotantes -->
-  <p>Tu nombre suena en cada latido mío</p>
+  <!-- Barra de audio -->
   <div id="barraAudio">
     <div class="barra"></div>
     <div class="barra"></div>
@@ -110,6 +129,9 @@
     <div class="barra"></div>
     <div class="barra"></div>
   </div>
+
+  <!-- Frase especial centrada -->
+  <div id="fraseEspecial">Tu nombre suena en cada latido mío</div>
 
   <audio id="miAudio" loop>
     <source src="Eres%20para%20Mí.mp3" type="audio/mpeg" />
@@ -129,10 +151,20 @@
       setTimeout(() => {
         document.getElementById("inicio").style.display = "none";
         document.getElementById("barraAudio").style.display = "flex";
+        document.getElementById("fraseEspecial").style.display = "block";
       }, 1200);
     }
 
-    const palabras = [ "te amo", "te adoro", "te quiero", "me encantas", "mi amor", "❤️" ];
+    const palabras = [
+      "te amo",
+      "te adoro",
+      "te quiero",
+      "me encantas",
+      "mi amor",
+      "❤️",
+      "tu nombre suena en cada latido mío"
+    ];
+
     function crearPalabra() {
       const palabra = document.createElement("div");
       palabra.className = "word";
