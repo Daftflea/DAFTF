@@ -41,15 +41,16 @@
       100% { transform: scale(1); opacity: 1; }
     }
 
-    .word {
-      position: absolute;
-      top: -50px;
-      font-size: 1.2em;
-      animation: fall linear infinite;
-      color: rgba(255,255,255,0.8);
-      pointer-events: none;
-    }
-
+.word {
+  position: absolute;
+  top: -50px;
+  font-size: 3em;
+  font-weight: bold;
+  animation: fall linear infinite;
+  color: rgba(255,255,255,0.95);
+  pointer-events: none;
+  text-shadow: 0 0 10px #fff, 0 0 20px #ff69b4, 0 0 30px #ff1493;
+}
     @keyframes fall {
       to {
         transform: translateY(100vh);
