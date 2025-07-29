@@ -95,17 +95,29 @@
     }
 
     #fraseEspecial {
-      display: none;
-      position: fixed;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2em;
-      color: #d10065;
-      text-shadow: 0 0 10px #fff;
-      animation: aparecer 2s ease-out;
-      z-index: 998;
-    }
+  display: none;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.5em;
+  color: #d10065;
+  text-shadow:
+    0 0 10px #fff,
+    0 0 5px #ff69b4,
+    0 0 15px #ffc0cb;
+  animation: aparecer 2s ease-out, desvanecer 1.5s ease-out 7s forwards;
+  z-index: 998;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translate(-50%, -60%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@keyframes desvanecer {
+  to { opacity: 0; }
+}
 
     @keyframes aparecer {
       from { opacity: 0; transform: translate(-50%, -60%); }
